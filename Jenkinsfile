@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         // Set your Docker image name and registry
-        DOCKER_IMAGE = 'gunasagaransureshsg/gunasagaransureshsg'
+        DOCKER_IMAGE = 'gunasagaransureshsg/my-node-app'
         DOCKER_TAG = 'latest'
         // Credentials IDs as configured in Jenkins
         DOCKER_CREDENTIALS_ID = 'dockercredentialsid'
