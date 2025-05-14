@@ -1,0 +1,98 @@
+# Start minikube
+minikube start
+
+# View cluster info
+kubectl get po -A
+
+# Set alias for easier typing
+alias kubectl="minikube kubectl --"
+
+# Enable mterics server
+minikube addons enable metrics-server
+
+# Enable ingress
+minikube addons enable ingress
+
+# Create new namespace for this project
+kubectl create namespace nodeapp
+
+# To get logs from a pods
+kubectl logs -f my-node-app -n nodeapp
+
+# Deploy from yaml
+kubectl create namespace nodeapp
+kubectl apply -f deployment.yaml -n nodeapp
+kubectl apply -f service.yaml -n nodeapp
+kubectl apply -f ingress.yaml -n nodeapp
+
+# Get pods
+kubectl get pods -n nodeapp
+
+# Get services
+kubectl get services -n nodeapp
+kubectl get ingress,svc -A
+
+# get ingress
+kubectl get ingress -n nodeapp
+
+# Exec into the pod and use curl to test the app:
+kubectl exec -it my-node-app-5f6b78d68b-x5hf5 -n nodeapp -- /bin/sh
+curl localhost:3000
+
+# To run your service to see if its connected to your deployment / pods
+minikube service my-node-service -n nodeapp
+
+# To check if ingress is connected to the backend service at correct port
+kubectl get ingress -n nodeapp
+kubectl describe ingress -n nodeapp
+
+# To update image after changes
+kubectl set image deployment/my-node-app my-node-app=my-node-app:latest -n nodeapp
+kubectl rollout restart deployment/my-node-app -n nodeapp
+
+# Get commands with basic output
+kubectl get services                          # List all services in the namespace
+kubectl get pods --all-namespaces             # List all pods in all namespaces
+kubectl get pods -o wide                      # List all pods in the current namespace, with more details
+kubectl get deployment my-dep                 # List a particular deployment
+kubectl get pods                              # List all pods in the namespace
+
+# Remove deployment
+kubectl delete deployment <deployment-name>
+
+# Remove service
+kubectl delete service <service-name> -n <namespace>
+
+# Remove namespace
+kubectl delete namespace nodeapp
+
+# Remove the Pod from reappearing from default namespace
+kubectl get deployment,replicaset,replicationcontroller,daemonset,job -n default
+kubectl delete deployment <deployment-name>
+kubectl delete daemonset <daemonset-name>
+
+# Enable connectivity from outside IPs
+minikube tunnel
+
+# Clean up tunnel
+minikube tunnel --cleanup
+
+# Add host entry (replace with your Minikube IP)
+minikube ssh
+echo "$(192.168.49.2) mydomain.com" | sudo tee -a /etc/hosts
+
+# With PowerShell, you must ensure Get-ExecutionPolicy is not Restricted. We suggest using Bypass to bypass the policy to get things installed or AllSigned for quite a bit more security.
+Run Get-ExecutionPolicy. If it returns Restricted, then run Set-ExecutionPolicy AllSigned or Set-ExecutionPolicy Bypass -Scope Process.
+Get-ExecutionPolicy
+
+# Install chocolatey
+Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
+
+# Install openssh
+choco install openssh
+
+# Add an entry to your /etc/hosts (Linux/Mac) or C:\Windows\System32\drivers\etc\hosts (Windows) file:
+127.0.0.1 my-node-app.com
+
+# If you are using Docker driver on Windows, there is a chance that you have an old version of SSH client you might get an error like - Privileged ports can only be forwarded by root. or you might not be able to access the service even after minikube tunnel if the access port is less than 1024 but for ports greater than 1024 works fine.
+choco install openssh
