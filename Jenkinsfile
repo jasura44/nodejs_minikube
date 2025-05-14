@@ -14,7 +14,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 // Clone the Git repository
-                git branch: 'main', url: 'https://github.com/jasura44/nodejs_minikube.git'
+                git branch: 'master', url: 'https://github.com/jasura44/nodejs_minikube.git'
             }
         }
         stage('Build Docker Image') {
