@@ -1,9 +1,10 @@
 pipeline {
     agent {
-        agent { label 'kube-agent' }
-        // kubernetes {
-        // cloud 'kubernetes'
-        // defaultContainer 'docker'
+        agent any
+
+        kubernetes {
+            defaultContainer 'docker'
+        }
     }
 
     environment {
