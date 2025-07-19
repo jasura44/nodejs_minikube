@@ -1,5 +1,10 @@
 pipeline {
-    agent { label 'jenkins-agent' }
+    agent { 
+        kubernetes{
+            label 'jenkins-agent'
+            defaultContainer 'jnlp'
+        }        
+    }
 
     environment {
         // Set your Docker image name and registry
@@ -29,9 +34,11 @@ pipeline {
         }
         stage('Push Docker Image') {
             steps {
-                script {
-                    docker.withRegistry('https://index.docker.io/v1/', "${DOCKER_CREDENTIALS_ID}") {
-                        docker.image("${DOCKER_IMAGE}:${DOCKER_TAG}").push()
+                container('docker') {
+                    script {
+                        docker.withRegistry('https://index.docker.io/v1/', "${DOCKER_CREDENTIALS_ID}") {
+                            docker.image("${DOCKER_IMAGE}:${DOCKER_TAG}").push()
+                        }
                     }
                 }
             }
