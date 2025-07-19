@@ -1,8 +1,9 @@
 pipeline {
     agent {
-        kubernetes {
-        cloud 'kubernetes'
-        defaultContainer 'jnlp'
+        agent { label 'kube-agent' }
+        // kubernetes {
+        // cloud 'kubernetes'
+        // defaultContainer 'jnlp'
     }
 
     environment {
