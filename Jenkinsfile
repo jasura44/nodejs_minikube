@@ -19,9 +19,11 @@ pipeline {
         }
         stage('Build Docker Image') {
             steps {
-                script {
-                    // Build the Docker image and tag as latest
-                    docker.build("${DOCKER_IMAGE}:${DOCKER_TAG}")
+                container('docker') {
+                    script {
+                        // Build the Docker image and tag as latest
+                        docker.build("${DOCKER_IMAGE}:${DOCKER_TAG}")
+                    }
                 }
             }
         }
