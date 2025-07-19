@@ -1,5 +1,9 @@
 pipeline {
-    agent any
+    agent {
+        kubernetes {
+        cloud 'kubernetes'
+        defaultContainer 'jnlp'
+    }
 
     environment {
         // Set your Docker image name and registry
