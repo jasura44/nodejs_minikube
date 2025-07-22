@@ -43,13 +43,14 @@ pipeline {
         stage('Deploy to Kubernetes') {
             steps {
                 container('kubectl') {
-                script {
-                    // Use the kubeconfig credentials for kubectl
-                    withCredentials([file(credentialsId: "${KUBECONFIG_CREDENTIAL_ID}", variable: 'KUBECONFIG')]) {
-                        sh '''
-                            export KUBECONFIG=$KUBECONFIG
-                            kubectl apply -f deployment.yaml -n backend
-                        '''
+                    script {
+                        // Use the kubeconfig credentials for kubectl
+                        withCredentials([file(credentialsId: "${KUBECONFIG_CREDENTIAL_ID}", variable: 'KUBECONFIG')]) {
+                            sh '''
+                                export KUBECONFIG=$KUBECONFIG
+                                kubectl apply -f deployment.yaml -n backend
+                            '''
+                        }
                     }
                 }
             }
