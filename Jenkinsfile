@@ -42,6 +42,7 @@ pipeline {
         // }
         stage('Deploy to Kubernetes') {
             steps {
+                container('kubectl') {
                 script {
                     // Use the kubeconfig credentials for kubectl
                     withCredentials([file(credentialsId: "${KUBECONFIG_CREDENTIAL_ID}", variable: 'KUBECONFIG')]) {
