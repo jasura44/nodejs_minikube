@@ -33,10 +33,12 @@ pipeline {
             steps {
                 container('docker') {
                     def imageTag = "${DOCKER_IMAGE}:${DOCKER_TAG}"
-                    docker build -t ${imageTag} .
-                    echo $DOCKER_CREDS_PSW | docker login -u $DOCKER_CREDS_USR --password-stdin
-                    docker push ${imageTag}
-                    docker logout
+                    sh """
+                        docker build -t ${imageTag} .
+                        echo $DOCKER_CREDS_PSW | docker login -u $DOCKER_CREDS_USR --password-stdin
+                        docker push ${imageTag}
+                        docker logout
+                    """
                 }
             }
         }
