@@ -29,17 +29,17 @@ pipeline {
                 }
             }
         }
-        stage('Push Docker Image') {
-            steps {
-                container('docker') {
-                    script {
-                        docker.withRegistry('https://index.docker.io/v1/', "${DOCKER_CREDENTIALS_ID}") {
-                            docker.image("${DOCKER_IMAGE}:${DOCKER_TAG}").push()
-                        }
-                    }
-                }
-            }
-        }
+        // stage('Push Docker Image') {
+        //     steps {
+        //         container('docker') {
+        //             script {
+        //                 docker.withRegistry('https://index.docker.io/v1/', "${DOCKER_CREDENTIALS_ID}") {
+        //                     docker.image("${DOCKER_IMAGE}:${DOCKER_TAG}").push()
+        //                 }
+        //             }
+        //         }
+        //     }
+        // }
         stage('Deploy to Kubernetes') {
             steps {
                 script {
