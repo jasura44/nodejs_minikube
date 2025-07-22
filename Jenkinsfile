@@ -32,13 +32,15 @@ pipeline {
         stage('Push Docker Image') {
             steps {
                 container('docker') {
-                    def imageTag = "${DOCKER_IMAGE}:${DOCKER_TAG}"
-                    sh """
-                        docker build -t ${imageTag} .
-                        echo $DOCKER_CREDS_PSW | docker login -u $DOCKER_CREDS_USR --password-stdin
-                        docker push ${imageTag}
-                        docker logout
-                    """
+                    script {
+                        def imageTag = "${DOCKER_IMAGE}:${DOCKER_TAG}"
+                        sh """
+                            docker build -t ${imageTag} .
+                            echo $DOCKER_CREDS_PSW | docker login -u $DOCKER_CREDS_USR --password-stdin
+                            docker push ${imageTag}
+                            docker logout
+                        """
+                    }
                 }
             }
         }
