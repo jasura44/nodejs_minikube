@@ -50,9 +50,9 @@ pipeline {
                 container('kubectl') {
                     script {
                         // Use the kubeconfig credentials for kubectl
-                        withCredentials([file(credentialsId: "${KUBECONFIG_CREDENTIAL_ID}", variable: 'KUBECONFIG')]) {
+                        withCredentials([file(credentialsId: env.KUBECONFIG_CREDENTIAL_ID, variable: 'KUBECONFIG_FILE')]) {
                             sh '''
-                                export KUBECONFIG=$KUBECONFIG
+                                export KUBECONFIG=$KUBECONFIG_FILE
                                 kubectl apply -f deployment.yaml -n backend
                             '''
                         }
