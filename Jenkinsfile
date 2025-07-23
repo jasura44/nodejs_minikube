@@ -47,7 +47,7 @@ pipeline {
 
         stage('Deploy to Kubernetes') {
             steps {
-                container('kubectl') {
+                // container('kubectl') {
                     script {
                         // Inject the kubeconfig file stored as a Secret file credential in Jenkins
                         withCredentials([file(credentialsId: 'kubeconfig', variable: 'KUBECONFIG')]) {
@@ -57,7 +57,7 @@ pipeline {
                         sh 'kubectl get pods --all-namespaces'
                         }
                     }
-                }
+                //}
             }
         }
         
