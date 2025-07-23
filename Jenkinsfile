@@ -9,7 +9,7 @@ pipeline {
         DOCKER_TAG = 'latest'
         // Credentials IDs as configured in Jenkins
         DOCKER_CREDS = credentials('dockerhub-creds');
-        KUBECONFIG_CREDENTIAL_ID = 'kubeconfig'
+        //KUBECONFIG_CREDENTIAL_ID = 'kubeconfig'
     }
 
     stages {
@@ -49,8 +49,13 @@ pipeline {
             steps {
                 container('kubectl') {
                     script {
-                        def output = sh(script: 'kubectl config view', returnStdout: true).trim()
-                        echo "${output}"
+                        // Inject the kubeconfig file stored as a Secret file credential in Jenkins
+                        withCredentials([file(credentialsId: 'kubeconfig', variable: 'KUBECONFIG')]) {
+                        
+                        // 'KUBECONFIG' is the env variable pointing to the temp kubeconfig path
+                        sh 'kubectl config view'        // Example kubectl command that uses the file
+                        sh 'kubectl get pods --all-namespaces'
+                        }
                     }
                 }
             }
