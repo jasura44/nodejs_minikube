@@ -52,8 +52,6 @@ pipeline {
                         // Use the kubeconfig credentials for kubectl
                         withCredentials([file(credentialsId: env.KUBECONFIG_CREDENTIAL_ID, variable: 'KUBECONFIG_FILE')]) {
                             sh '''
-                                export KUBECONFIG=$KUBECONFIG_FILE
-                                kubectl apply -f deployment.yaml -n backend
                                 echo kubectl config view
                             '''
                         }
