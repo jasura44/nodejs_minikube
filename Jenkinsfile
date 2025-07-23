@@ -60,9 +60,10 @@ pipeline {
                             
                             # Optional: display current context for validation
                             kubectl config current-context
+                            kubectl config set-context --current --namespace=backend
                             
                             # Example deployment command to Minikube cluster
-                            kubectl apply -f deployment.yaml -n backend
+                            kubectl apply -f deployment.yaml
                             
                             # Cleanup kubeconfig file after use (optional)
                             rm ./kubeconfig
