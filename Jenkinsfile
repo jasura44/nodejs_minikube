@@ -49,15 +49,8 @@ pipeline {
             steps {
                 container('kubectl') {
                     script {
-                            sh '''
-                                echo kubectl config view
-                            '''
-                        // Use the kubeconfig credentials for kubectl
-                        withCredentials([file(credentialsId: env.KUBECONFIG_CREDENTIAL_ID, variable: 'KUBECONFIG_FILE')]) {
-                            sh '''
-                                echo kubectl config view
-                            '''
-                        }
+                        def output = sh(script: 'kubectl config view', returnStdout: true).trim()
+                        echo "${output}"
                     }
                 }
             }
