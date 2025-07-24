@@ -50,29 +50,17 @@ pipeline {
                 container('kubectl') {
                     script {
                         // Bind the kubeconfig secret file credential to env var KUBECONFIG_FILE
-                        withCredentials([file(credentialsId: 'kubeconfig', variable: 'KUBECONFIG_FILE')]) {
-                            
-                            // Write the kubeconfig contents to a file kubeconfig in workspace
-                            sh '''
-                            cp "$KUBECONFIG_FILE" ./kubeconfig
-                            chmod 600 ./kubeconfig
-                            export KUBECONFIG=$(pwd)/kubeconfig
-                            
-                            # Optional: display current context for validation
-                            kubectl config current-context
-                            kubectl config set-context --current --namespace=backend
-                            
-                            # Example deployment command to Minikube cluster
-                            kubectl apply -f deployment.yaml
-                            
-                            # Cleanup kubeconfig file after use (optional)
-                            rm ./kubeconfig
-                            '''
+                        withCredentials([file(credentialsId: 'kubeconfig', variable: 'KUBECONFIG')]) {
+                        sh '''
+                            kubectl version
+                            kubectl config get-contexts
+                            kubectl apply -f kubernetes/deployment.yaml
+                        '''
                         }
                     }
                 }
             }
         }
-        
+
     }//end stages
 }//end file
