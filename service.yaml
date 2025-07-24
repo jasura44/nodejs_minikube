@@ -4,9 +4,10 @@ metadata:
   name: nodejs-service
   namespace: backend
 spec:
+  type: ClusterIP
   selector:
-    app: nodejs
+    app: nodejs-app
   ports:
     - protocol: TCP
-      port: 80
-      targetPort: 3000
+      port: 80 # This is the port exposed by the service
+      targetPort: 3000 # This is the port on which the container listens
