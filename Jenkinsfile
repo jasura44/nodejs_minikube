@@ -52,8 +52,8 @@ pipeline {
                         // Bind the kubeconfig secret file credential to env var KUBECONFIG_FILE
                         withCredentials([file(credentialsId: 'kubeconfig', variable: 'KUBECONFIG')]) {
                         sh '''
-                            kubectl version
-                            kubectl config get-contexts
+                            kubectl config set-context --current --namespace=jenkins
+                            export KUBECONFIG=$(echo $KUBECONFIG | tr -d '[:space:]')
                             kubectl apply -f deployment.yaml
                         '''
                         }
