@@ -54,7 +54,7 @@ pipeline {
                         sh '''
                             kubectl version
                             kubectl config get-contexts
-                            kubectl apply -f kubernetes/deployment.yaml
+                            kubectl apply -f deployment.yaml
                         '''
                         }
                     }
