@@ -8,7 +8,7 @@ pipeline {
         DOCKER_IMAGE = 'gunasagaransureshsg/nodejs'
         DOCKER_TAG = 'latest'
         // Credentials IDs as configured in Jenkins
-        DOCKER_CREDS = credentials('dockerhub-creds');
+        DOCKER_CREDS = credentials('dockerid');
         //KUBECONFIG_CREDENTIAL_ID = 'kubeconfig'
     }
 

@@ -4,10 +4,10 @@ minikube start --driver=docker
 # Enable ingress addon
 minikube addons enable ingress
 
-# Create jenkins namespace
+# Create backend namespace
 kubectl apply -f namespace.yaml
 
-# Change current namespace to jenkins
+# Change current namespace to backend
 kubectl config set-context --current --namespace=backend
 
 # Build docker image
