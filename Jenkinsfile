@@ -1,10 +1,5 @@
 pipeline {
-    agent {
-        kubernetes {
-            label 'jenkins-agent'
-            //defaultContainer 'jnlp'
-        }
-    }
+    agent any
 
     environment {
         // Set your Docker image name and registry
@@ -15,9 +10,6 @@ pipeline {
         //KUBECONFIG_CREDENTIAL_ID = 'kubeconfig'
     }
 
-    node('jenkins-agent') {
-
-
     stages {
         stage('Checkout') {
             steps {
@@ -26,17 +18,21 @@ pipeline {
             }
         }
 
-            stage('Build Docker Image') {
-                steps {
-                    container('docker') {
-                        script {
-                            // Build the Docker image and tag as latest
-                            docker.build("${DOCKER_IMAGE}:${DOCKER_TAG}")
-                        }
+        node('jenkins-agent') {
+
+
+        stage('Build Docker Image') {
+            steps {
+                container('docker') {
+                    script {
+                        // Build the Docker image and tag as latest
+                        docker.build("${DOCKER_IMAGE}:${DOCKER_TAG}")
                     }
                 }
             }
+        }
 
+        }
 
         stage('Push Docker Image') {
             steps {
@@ -73,6 +69,6 @@ pipeline {
                 }
             }
         }
-            
+
     }//end stages
 }//end file
