@@ -2,7 +2,7 @@ pipeline {
     agent {
         kubernetes {
             label 'jenkins-agent'
-            defaultContainer 'jnlp'
+            //defaultContainer 'jnlp'
         }
     }
 
@@ -24,7 +24,7 @@ pipeline {
         }
         stage('Build Docker Image') {
             steps {
-                container('jnlp') {
+                container('docker') {
                     script {
                         // Build the Docker image and tag as latest
                         docker.build("${DOCKER_IMAGE}:${DOCKER_TAG}")
