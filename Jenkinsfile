@@ -2,7 +2,7 @@ pipeline {
     agent {
         kubernetes {
             label 'jenkins-agent'
-            //defaultContainer 'jnlp'
+            defaultContainer 'jnlp'
         }
     }
 
@@ -16,6 +16,7 @@ pipeline {
     }
 
     stages {
+
         stage('Checkout') {
             steps {
                 // Clone the Git repository
@@ -71,4 +72,5 @@ pipeline {
         }
 
     }//end stages
+
 }//end file
