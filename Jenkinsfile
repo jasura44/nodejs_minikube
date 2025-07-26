@@ -22,6 +22,8 @@ pipeline {
                 git branch: 'master', url: 'https://github.com/jasura44/nodejs_minikube.git'
             }
         }
+        node('jenkins-agent') {
+
         stage('Build Docker Image') {
             steps {
                 container('docker') {
@@ -32,6 +34,8 @@ pipeline {
                 }
             }
         }
+        }
+
         stage('Push Docker Image') {
             steps {
                 container('docker') {
