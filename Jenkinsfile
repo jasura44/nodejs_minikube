@@ -1,5 +1,10 @@
 pipeline {
-    agent any
+    agent {
+        kubernetes {
+            label 'jenkins-agent'
+            //defaultContainer 'jnlp'
+        }
+    }
 
     environment {
         // Set your Docker image name and registry
@@ -18,9 +23,6 @@ pipeline {
             }
         }
 
-        node('jenkins-agent') {
-
-
         stage('Build Docker Image') {
             steps {
                 container('docker') {
@@ -31,9 +33,7 @@ pipeline {
                 }
             }
         }
-
-        }
-
+        
         stage('Push Docker Image') {
             steps {
                 container('docker') {
