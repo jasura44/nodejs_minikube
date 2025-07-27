@@ -24,17 +24,6 @@ pipeline {
                 }
             }
         }
-
-        stage('Build Docker Image') {
-            steps {
-                container('docker') {
-                    script {
-                        // Build the Docker image and tag as latest
-                        docker.build("${DOCKER_IMAGE}:${DOCKER_TAG}")
-                    }
-                }
-            }
-        }
         
         stage('Push Docker Image') {
             steps {
