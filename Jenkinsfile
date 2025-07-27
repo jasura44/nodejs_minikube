@@ -12,14 +12,12 @@ pipeline {
 
     stages {
 
-        node('jenkins-agent') {
-            stage('Build Docker Image') {
-                steps {
-                    container('docker') {
-                        script {
-                            // Build the Docker image and tag as latest
-                            docker.build("${DOCKER_IMAGE}:${DOCKER_TAG}")
-                        }
+        stage('Build Docker Image') {
+            steps {
+                container('docker') {
+                    script {
+                        // Build the Docker image and tag as latest
+                        docker.build("${DOCKER_IMAGE}:${DOCKER_TAG}")
                     }
                 }
             }
