@@ -12,10 +12,16 @@ pipeline {
 
     stages {
 
-        stage('Checkout') {
-            steps {
-                // Clone the Git repository
-                git branch: 'master', url: 'https://github.com/jasura44/nodejs_minikube.git'
+        node('jenkins-agent') {
+            stage('Build Docker Image') {
+                steps {
+                    container('docker') {
+                        script {
+                            // Build the Docker image and tag as latest
+                            docker.build("${DOCKER_IMAGE}:${DOCKER_TAG}")
+                        }
+                    }
+                }
             }
         }
 
