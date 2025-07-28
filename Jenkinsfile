@@ -7,7 +7,6 @@ pipeline {
         DOCKER_TAG = 'latest'
         // Credentials IDs as configured in Jenkins
         DOCKER_CREDS = credentials('dockerid');
-        //KUBECONFIG_CREDENTIAL_ID = 'kubeconfig'
     }
 
     stages {
@@ -47,9 +46,8 @@ pipeline {
                             withCredentials([file(credentialsId: 'kubeconfig', variable: 'KUBECONFIG')]) {
                             sh '''
                                 echo "Creating/updating deployment in namespace backend..."
-                                kubectl config set-context --current --namespace=backend
-                                export KUBECONFIG=$(echo $KUBECONFIG | tr -d '[:space:]')
-                                kubectl apply -f deployment.yaml
+                                kubectl apply -f deployment.yaml -n backend --kubeconfig=$KUBECONFIG_PATH
+
                             '''
                         }
                         } catch (err) {
