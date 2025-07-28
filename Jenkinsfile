@@ -1,5 +1,9 @@
 pipeline {
-    agent { label 'jenkins-agent' }
+    agent { 
+        kubernetes {
+            label 'jenkins-agent' 
+        }
+    }
 
     environment {
         // Set your Docker image name and registry
