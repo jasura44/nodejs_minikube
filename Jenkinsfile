@@ -40,7 +40,7 @@ pipeline {
 
         stage('Deploy to Kubernetes') {
             steps {
-                container('docker') {
+                container('kubectl') {
                     script {
                         try {
                             withCredentials([file(credentialsId: 'kubeconfig', variable: 'KUBECONFIG')]) {
