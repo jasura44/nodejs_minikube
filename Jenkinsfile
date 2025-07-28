@@ -1,7 +1,49 @@
 pipeline {
-    agent { 
+agent {
         kubernetes {
-            label 'jenkins-agent' 
+            label 'jenkins-agent'
+            defaultContainer 'jnlp'
+            yaml """
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    jenkins: jenkins-agent
+spec:
+  containers:
+    - name: jnlp
+      image: jenkins/inbound-agent:latest
+      args: ['\$(JENKINS_SECRET)', '\$(JENKINS_NAME)']
+      volumeMounts:
+        - name: kubeconfig-volume
+          mountPath: /root/.kube
+          readOnly: true
+    - name: kubectl
+      image: bitnami/kubectl:latest
+      command:
+        - cat
+      tty: true
+      volumeMounts:
+        - name: kubeconfig-volume
+          mountPath: /root/.kube
+          readOnly: true
+    - name: docker
+      image: docker:stable-dind
+      command:
+        - cat
+      tty: true
+      volumeMounts:
+        - name: docker-sock
+          mountPath: /var/run/docker.sock
+  volumes:
+    - name: kubeconfig-volume
+      secret:
+        secretName: minikube-credentials
+    - name: docker-sock
+      hostPath:
+        path: /var/run/docker.sock
+        type: Socket
+"""
         }
     }
 
