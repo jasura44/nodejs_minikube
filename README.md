@@ -30,3 +30,10 @@ minikube tunnel
 
 # Port forward to test
 kubectl port-forward service/nodejs-service 3000:80 -n backend
+
+------------------------------------------------------------------------------------------------
+
+## Utilities
+
+kubectl logs jenkins-agent-9n6nm -c kubectl -n jenkins
+
