@@ -46,6 +46,7 @@ pipeline {
                         try {
                             withCredentials([file(credentialsId: 'kubeconfig', variable: 'KUBECONFIG')]) {
                             sh '''
+                                echo "Creating/updating deployment in namespace backend..."
                                 kubectl config set-context --current --namespace=backend
                                 export KUBECONFIG=$(echo $KUBECONFIG | tr -d '[:space:]')
                                 kubectl apply -f deployment.yaml
