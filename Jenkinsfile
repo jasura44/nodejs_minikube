@@ -43,7 +43,7 @@ pipeline {
                 container('kubectl') {
                     script {
 
-                        withKubeConfig([credentialsId: 'kubeconfig'])
+                        withCredentials([file(credentialsId: 'kubeconfig', variable: 'KUBECONFIG')])
                         {
                             sh '''
                                 echo "Creating/updating deployment in namespace backend..."
