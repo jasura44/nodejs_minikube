@@ -42,15 +42,10 @@ pipeline {
             steps {
                 container('kubectl') {
                     script {
-
-                        withCredentials([file(credentialsId: 'kubeconfig', variable: 'KUBECONFIG')])
-                        {
-                            sh '''
-                                echo "Creating/updating deployment in namespace backend..."
-                                kubectl apply -f deployment.yaml -n backend
-
-                            '''
-                        }                      
+                        sh '''
+                        echo "Creating/updating deployment in namespace backend..."
+                        kubectl apply -f deployment.yaml -n backend
+                        '''                    
                     }
                 }
             }
