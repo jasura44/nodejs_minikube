@@ -10,23 +10,16 @@ metadata:
   labels:
     jenkins: jenkins-agent
 spec:
+  serviceAccountName: jenkins-service-account   # Use your ServiceAccount here
   containers:
     - name: jnlp
       image: jenkins/inbound-agent:latest
       args: ['\$(JENKINS_SECRET)', '\$(JENKINS_NAME)']
-      volumeMounts:
-        - name: kubeconfig-volume
-          mountPath: /root/.kube
-          readOnly: true
     - name: kubectl
       image: bitnami/kubectl:latest
       command:
         - cat
       tty: true
-      volumeMounts:
-        - name: kubeconfig-volume
-          mountPath: /root/.kube
-          readOnly: true
     - name: docker
       image: docker:stable-dind
       command:
@@ -36,9 +29,6 @@ spec:
         - name: docker-sock
           mountPath: /var/run/docker.sock
   volumes:
-    - name: kubeconfig-volume
-      secret:
-        secretName: minikube-credentials
     - name: docker-sock
       hostPath:
         path: /var/run/docker.sock
