@@ -35,5 +35,13 @@ kubectl port-forward service/nodejs-service 3000:80 -n backend
 
 ## Utilities
 
-kubectl logs jenkins-agent-9n6nm -c kubectl -n jenkins
+# To view container logs inside a pod
+kubectl logs jenkins-agent-j2lmg -c kubectl -n jenkins
+
+# To see no of cpu cores allocated
+minikube ssh -- nproc
+
+# To get memory info
+minikube ssh -- cat /proc/meminfo
+
 
