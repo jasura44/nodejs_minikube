@@ -49,6 +49,7 @@ pipeline {
                     script {
                             withCredentials([file(credentialsId: 'kubeconfig', variable: 'KUBECONFIG')]) {
                                 sh '''
+                                kubectl version --client
                                 kubectl --kubeconfig=$KUBECONFIG get pods
                                 kubectl --kubeconfig=$KUBECONFIG apply -f deployment.yaml -n backend
                                 '''

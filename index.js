@@ -6,7 +6,7 @@ const app = express();
 app.use(express.json());
 
 // Default route
-app.get('/', (req, res) => res.send('Hello World!'));
+app.get('/', (req, res) => res.send('Hello World to everyone!'));
 
 // Start server
 const PORT = process.env.PORT || 3000;
