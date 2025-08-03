@@ -7,6 +7,10 @@ pipeline {
     }
 
     environment {
+        KUBECONFIG = credentials('kubeconfig')
+    }
+
+    environment {
         // Set your Docker image name and registry
         DOCKER_IMAGE = 'gunasagaransureshsg/nodejs'
         DOCKER_TAG = 'latest'
